@@ -17,7 +17,7 @@ async function generateSummary(counts, weightByType, totalWeight, unit) {
 
   // Construimos el prompt con la instrucción explícita de UN solo mensaje
   const userPrompt = noDetection
-    ? `No se detectaron frutas ni verduras en la imagen. Escribe UNA sola frase breve, divertida y diferente cada vez en español (puedes usar emojis). Ejemplo: "¡Ups! No encontramos nada fresco, prueba con otra foto 🍏"`
+    ? `No se detectaron frutas ni verduras en la imagen. Escribe UNA sola frase breve, divertida (sin exagerar) y diferente cada vez en español (puedes usar emojis). Ejemplo: "¡Ups! No encontramos nada fresco, prueba con otra foto 🍏"`
     : `He detectado las siguientes frutas/verduras y pesos:\n${counts
         .map((c) => `- ${c.label}: ${c.count} unidad${c.count > 1 ? "es" : ""}`)
         .join("\n")}\n${weightByType
@@ -38,8 +38,8 @@ async function generateSummary(counts, weightByType, totalWeight, unit) {
         },
         { role: "user", content: userPrompt },
       ],
-      temperature: 0.7,
-      top_p: 0.75,
+      temperature: 0.6,
+      top_p: 0.63,
       max_tokens: 60,
     },
     {

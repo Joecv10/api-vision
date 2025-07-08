@@ -133,4 +133,46 @@ async function detectAndSave(req, res) {
   }
 }
 
-module.exports = { detectAndSave };
+// Todos los registros
+const getAllRecords = async (req, res) => {
+  try {
+    const records = await InferenceRecord.find().sort({ createdAt: -1 });
+    res.json(records);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los registros", error });
+  }
+};
+
+// Obtener un registro por ID
+const getRecordById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const record = await InferenceRecord.findById(id);
+
+    if (!record) {
+      return res.status(404).json({ message: "Registro no encontrado" });
+    }
+
+    res.json(record);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener el registro", error });
+  }
+};
+
+// Eliminar un registro
+const deleteRecord = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const record = await InferenceRecord.findByIdAndDelete(id);
+
+    if (!record) {
+      return res.status(404).json({ message: "Registro no encontrado" });
+    }
+
+    res.json({ message: "Registro eliminado exitosamente" });
+  } catch (error) {
+    res.status(500).json({ message: "Error al eliminar el registro", error });
+  }
+};
+
+module.exports = { detectAndSave, getAllRecords, getRecordById, deleteRecord };

@@ -1,42 +1,52 @@
+// models/inferenceRecord.js
 const { Schema, model } = require("mongoose");
 
 const DetectionSchema = new Schema(
   {
-    label: String,
-    confidence: Number,
-    bbox: [Number],
+    label: { type: String, required: true },
+    confidence: { type: Number, required: true },
+    bbox: { type: [Number], required: true },
   },
   { _id: false }
 );
 
 const CountSchema = new Schema(
   {
-    label: String,
-    count: Number,
+    label: { type: String, required: true },
+    count: { type: Number, required: true },
   },
   { _id: false }
 );
 
 const WeightByTypeSchema = new Schema(
   {
-    label: String,
-    count: Number,
-    averageWeight: Number,
-    totalWeight: Number,
+    label: { type: String, required: true },
+    count: { type: Number, required: true },
+    averageWeight: { type: Number, required: true },
+    totalWeight: { type: Number, required: true },
   },
   { _id: false }
 );
 
-const InferenceRecordSchema = new Schema({
-  originalImageId: Schema.Types.ObjectId, // GridFS File ID
-  annotatedImageId: Schema.Types.ObjectId, // GridFS File ID
-  detections: [DetectionSchema],
-  counts: [CountSchema],
-  weightByType: [WeightByTypeSchema],
-  totalWeight: Number,
-  weightUnit: { type: String, default: "g" },
-  message: String,
-  createdAt: { type: Date, default: Date.now },
-});
+const InferenceRecordSchema = new Schema(
+  {
+    originalImageId: { type: Schema.Types.ObjectId, required: true },
+    annotatedImageId: { type: Schema.Types.ObjectId, required: true },
+    detections: { type: [DetectionSchema], required: true },
+    counts: { type: [CountSchema], required: true },
+    weightByType: { type: [WeightByTypeSchema], required: true },
+    totalWeight: { type: Number, required: true },
+    weightUnit: { type: String, default: "g" },
+    message: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+// Índices útiles
+InferenceRecordSchema.index({ createdAt: -1 });
+InferenceRecordSchema.index({ "detections.label": 1 });
+InferenceRecordSchema.index({ totalWeight: 1 });
 
 module.exports = model("InferenceRecord", InferenceRecordSchema);

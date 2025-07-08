@@ -18,12 +18,12 @@ async function seed() {
 
     // Datos de ejemplo para insertar
     const seedData = [
-      { fruitType: "Banana", averageWeight: 118 },
-      { fruitType: "Brocoli", averageWeight: 150 },
-      { fruitType: "Guayaba", averageWeight: 50 },
-      { fruitType: "Manzana", averageWeight: 182 },
-      { fruitType: "Pepino", averageWeight: 300 },
-      { fruitType: "Zanahoria", averageWeight: 61 },
+      { fruitType: "Banana", averageWeight: 140.6 },
+      { fruitType: "Brocoli", averageWeight: 340.2 },
+      { fruitType: "Guayaba", averageWeight: 99.8 },
+      { fruitType: "Manzana", averageWeight: 149.7 },
+      { fruitType: "Pepino", averageWeight: 285.8 },
+      { fruitType: "Zanahoria", averageWeight: 172.4 },
     ];
 
     await FruitWeight.insertMany(seedData);

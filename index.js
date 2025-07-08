@@ -1,8 +1,13 @@
+// index.js
+
 const express = require("express");
 const multer = require("multer");
 const axios = require("axios");
 const FormData = require("form-data");
 const { createCanvas, loadImage } = require("canvas");
+
+// Importar las rutas de inferencia
+const inferenceRoutes = require("./Routes/inferenceRoutes");
 
 // Configuración de Express y Multer para recibir archivos
 const app = express();
@@ -10,6 +15,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 // URL del microservicio FastAPI
 const FASTAPI_URL = "http://localhost:8000/detect/";
+
+// Montar las rutas de inferencia
+app.use("/api/v1", inferenceRoutes);
 
 // Endpoint /detect que proxy la imagen a FastAPI y dibuja bounding boxes con Jimp
 app.post("/detect", upload.single("file"), async (req, res) => {

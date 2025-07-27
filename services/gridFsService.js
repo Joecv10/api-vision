@@ -33,4 +33,16 @@ async function storeFile(buffer, filename, contentType) {
   });
 }
 
-module.exports = { storeFile };
+/**
+ * Returns a readable stream for a given fileId.
+ * @param {ObjectId|string} fileId
+ * @returns {ReadableStream}
+ */
+function getFileStream(fileId) {
+  if (!bucket) throw new Error("GridFSBucket not initialized");
+  const _id =
+    typeof fileId === "string" ? new mongoose.Types.ObjectId(fileId) : fileId;
+  return bucket.openDownloadStream(_id);
+}
+
+module.exports = { storeFile, getFileStream };

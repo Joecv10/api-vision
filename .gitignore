@@ -142,6 +142,8 @@ build/Release
 ehthumbs.db
 Thumbs.db
 
+Images-Inferencias/
+
 # Build directories
 build/
 dist/

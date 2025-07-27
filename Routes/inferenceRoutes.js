@@ -8,6 +8,8 @@ const {
   deleteRecord,
 } = require("../controllers/inferenceController");
 
+const { streamImage } = require("../controllers/imageController");
+
 // Configurar Multer para manejo en memoria
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -21,6 +23,9 @@ router.get("/records", getAllRecords);
 
 // GET /api/records/:id - Obtener un registro por ID
 router.get("/records/:id", getRecordById);
+
+// **NEW** GET /api/images/:id -->
+router.get("/images/:id", streamImage);
 
 // DELETE /api/records/:id - Eliminar un registro
 router.delete("/records/:id", deleteRecord);
